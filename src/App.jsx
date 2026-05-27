@@ -3,12 +3,12 @@ import axios from 'axios';
 import { 
   Shield, ShieldAlert, ShieldCheck, Link as LinkIcon, Activity, AlertOctagon, 
   Mail, ChevronRight, Lock, Globe, CheckCircle2, Lightbulb, 
-  Wifi, Smartphone, Eye, EyeOff, Key, LogOut, User, Sparkles, CreditCard, Clock, Code, Database, Cpu, ArrowRight, BookOpen, RefreshCw
+  Wifi, Smartphone, Eye, EyeOff, Key, LogOut, User, Sparkles, CreditCard, Clock, Code, Database, Cpu, ArrowRight, BookOpen, RefreshCw, Menu, X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // ==========================================
-// 1. NAVBAR & FOOTER COMPONENTS
+// 1. NAVBAR (WITH MOBILE RESPONSIVE MENU) & FOOTER
 // ==========================================
 const Navbar = ({ currentPage, changePage, globalUser, handleLogout }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -17,7 +17,7 @@ const Navbar = ({ currentPage, changePage, globalUser, handleLogout }) => {
     <nav className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* LOGO */}
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => changePage('home')}>
+        <div className="flex items-center gap-3 cursor-pointer" onClick={() => {changePage('home'); setIsMobileMenuOpen(false);}}>
           <div className="bg-indigo-600 p-2.5 rounded-xl shadow-lg shadow-indigo-200">
             <Shield className="w-6 h-6 text-white" />
           </div>
@@ -55,42 +55,53 @@ const Navbar = ({ currentPage, changePage, globalUser, handleLogout }) => {
             </>
           ) : (
             <>
-              <button onClick={() => changePage('auth', 'login')} className="text-sm font-bold text-slate-600 hover:text-indigo-600 transition flex items-center gap-2">Sign In</button>
-              <button onClick={() => changePage('auth', 'signup')} className="text-sm font-bold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-5 py-2.5 rounded-xl transition border border-indigo-200">Create Account</button>
+              <button onClick={() => changePage('pricing')} className="text-sm font-bold text-orange-500 hover:text-orange-600 transition flex items-center gap-2 mr-2">
+                <Activity className="w-4 h-4" /> Subscriptions
+              </button>
+              <button onClick={() => changePage('auth', 'login')} className="text-sm font-bold text-slate-600 hover:text-indigo-600 transition flex items-center gap-2">
+                Sign In
+              </button>
+              <button onClick={() => changePage('auth', 'signup')} className="text-sm font-bold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-5 py-2.5 rounded-xl transition border border-indigo-200">
+                Create Account
+              </button>
             </>
           )}
         </div>
 
         {/* MOBILE HAMBURGER ICON */}
         <div className="md:hidden flex items-center">
-          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-slate-600 hover:text-indigo-600 transition">
+          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-slate-600 hover:text-indigo-600 transition focus:outline-none">
             {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
           </button>
         </div>
       </div>
 
       {/* MOBILE MENU DROPDOWN */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-slate-100 p-5 flex flex-col gap-4 shadow-xl absolute w-full">
-          <button onClick={() => {changePage('home'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-slate-600">Home</button>
-          <button onClick={() => {changePage('scanner', 'url'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-slate-600">URL Scanner</button>
-          <button onClick={() => {changePage('scanner', 'email'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-slate-600">Email Scanner</button>
-          <button onClick={() => {changePage('tips'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-slate-600">Security Tips</button>
-          <button onClick={() => {changePage('about'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-slate-600">About Us</button>
-          <hr className="border-slate-100 my-2"/>
-          {globalUser ? (
-            <>
-              <div className="font-bold text-indigo-600 flex items-center gap-2"><User className="w-4 h-4"/> {globalUser}</div>
-              <button onClick={() => {handleLogout(); setIsMobileMenuOpen(false);}} className="text-left text-rose-600 font-bold flex items-center gap-2"><LogOut className="w-4 h-4"/> Log Out</button>
-            </>
-          ) : (
-            <>
-              <button onClick={() => {changePage('auth', 'login'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-slate-600">Sign In</button>
-              <button onClick={() => {changePage('auth', 'signup'); setIsMobileMenuOpen(false);}} className="bg-indigo-50 text-indigo-700 px-4 py-3 rounded-xl font-bold text-center">Create Account</button>
-            </>
-          )}
-        </div>
-      )}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="md:hidden bg-white border-t border-slate-100 p-5 flex flex-col gap-5 shadow-xl absolute w-full left-0">
+            <button onClick={() => {changePage('home'); setIsMobileMenuOpen(false);}} className={`text-left font-bold text-lg ${currentPage === 'home' ? 'text-indigo-600' : 'text-slate-600'}`}>Home</button>
+            <button onClick={() => {changePage('scanner', 'url'); setIsMobileMenuOpen(false);}} className={`text-left font-bold text-lg ${currentPage === 'scanner_url' ? 'text-indigo-600' : 'text-slate-600'}`}>URL Scanner</button>
+            <button onClick={() => {changePage('scanner', 'email'); setIsMobileMenuOpen(false);}} className={`text-left font-bold text-lg ${currentPage === 'scanner_email' ? 'text-indigo-600' : 'text-slate-600'}`}>Email Scanner</button>
+            <button onClick={() => {changePage('tips'); setIsMobileMenuOpen(false);}} className={`text-left font-bold text-lg ${currentPage === 'tips' ? 'text-indigo-600' : 'text-slate-600'}`}>Security Tips</button>
+            <button onClick={() => {changePage('about'); setIsMobileMenuOpen(false);}} className={`text-left font-bold text-lg ${currentPage === 'about' ? 'text-indigo-600' : 'text-slate-600'}`}>About Us</button>
+            <hr className="border-slate-100 my-2"/>
+            {globalUser ? (
+              <>
+                <div className="font-bold text-indigo-600 flex items-center gap-2 text-lg"><User className="w-5 h-5"/> {globalUser}</div>
+                <button onClick={() => {changePage('pricing'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-orange-500 flex items-center gap-2 text-lg"><Sparkles className="w-5 h-5"/> Upgrade Pro</button>
+                <button onClick={() => {handleLogout(); setIsMobileMenuOpen(false);}} className="text-left text-rose-600 font-bold flex items-center gap-2 text-lg"><LogOut className="w-5 h-5"/> Log Out</button>
+              </>
+            ) : (
+              <>
+                <button onClick={() => {changePage('pricing'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-orange-500 flex items-center gap-2 text-lg"><Activity className="w-5 h-5"/> Subscriptions</button>
+                <button onClick={() => {changePage('auth', 'login'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-slate-600 text-lg">Sign In</button>
+                <button onClick={() => {changePage('auth', 'signup'); setIsMobileMenuOpen(false);}} className="bg-indigo-50 text-indigo-700 px-4 py-3 rounded-xl font-bold text-center text-lg w-full">Create Account</button>
+              </>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
@@ -418,7 +429,7 @@ const AuthPage = ({ authMode, setGlobalUser, changePage }) => {
                     placeholder="••••••••" 
                     className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 pr-12 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-medium text-slate-900" 
                   />
-                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-600 transition">
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-600 transition focus:outline-none">
                     <AnimatePresence mode="wait">
                       <motion.div key={showPassword ? "visible" : "hidden"} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} transition={{ duration: 0.15 }}>
                         {showPassword ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
@@ -452,13 +463,13 @@ const AuthPage = ({ authMode, setGlobalUser, changePage }) => {
 
           <div className="mt-8 text-sm font-medium">
             {canResend ? (
-               <p className="text-slate-500">Didn't receive the code? <button onClick={handleResendOTP} type="button" disabled={isSubmitting} className="text-indigo-600 font-bold hover:underline flex items-center justify-center gap-1 mx-auto mt-2"><RefreshCw className={`w-4 h-4 ${isSubmitting ? 'animate-spin' : ''}`}/> Resend Code</button></p>
+               <p className="text-slate-500">Didn't receive the code? <button onClick={handleResendOTP} type="button" disabled={isSubmitting} className="text-indigo-600 font-bold hover:underline flex items-center justify-center gap-1 mx-auto mt-2 focus:outline-none"><RefreshCw className={`w-4 h-4 ${isSubmitting ? 'animate-spin' : ''}`}/> Resend Code</button></p>
             ) : (
                <p className="text-slate-400 flex items-center justify-center gap-1.5"><Clock className="w-4 h-4"/> Resend code in <span className="text-slate-700 font-bold">00:{timeLeft < 10 ? `0${timeLeft}` : timeLeft}</span></p>
             )}
           </div>
 
-          <button onClick={() => { setStep(1); setOtpCode(''); setShowPassword(false); }} className="mt-6 text-sm text-slate-400 font-bold hover:text-indigo-600 transition">
+          <button onClick={() => { setStep(1); setOtpCode(''); setShowPassword(false); }} className="mt-6 text-sm text-slate-400 font-bold hover:text-indigo-600 transition focus:outline-none">
             &larr; Back to Email Entry
           </button>
         </motion.div>
@@ -496,7 +507,7 @@ const AuthPage = ({ authMode, setGlobalUser, changePage }) => {
             </button>
           </form>
           
-          <button onClick={() => {setView('login'); setErrorMsg(''); setShowPassword(false);}} className="mt-8 text-sm text-slate-500 font-bold hover:text-indigo-600 text-center mx-auto block transition">
+          <button onClick={() => {setView('login'); setErrorMsg(''); setShowPassword(false);}} className="mt-8 text-sm text-slate-500 font-bold hover:text-indigo-600 text-center mx-auto block transition focus:outline-none">
             Back to Sign In
           </button>
         </motion.div>
@@ -558,7 +569,7 @@ const AuthPage = ({ authMode, setGlobalUser, changePage }) => {
               <div className="flex justify-between items-center mb-2">
                  <label className="block text-sm font-bold text-slate-700">Password</label>
                  {view === 'login' && (
-                   <button type="button" onClick={() => {setView('forgot'); setErrorMsg(''); setSuccessMsg(''); setShowPassword(false);}} className="text-sm font-bold text-indigo-600 hover:underline transition">
+                   <button type="button" onClick={() => {setView('forgot'); setErrorMsg(''); setSuccessMsg(''); setShowPassword(false);}} className="text-sm font-bold text-indigo-600 hover:underline transition focus:outline-none">
                      Forgot password?
                    </button>
                  )}
@@ -574,7 +585,7 @@ const AuthPage = ({ authMode, setGlobalUser, changePage }) => {
                   placeholder="••••••••" 
                   className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 pr-12 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition font-medium text-slate-900" 
                 />
-                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-600 transition">
+                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-600 transition focus:outline-none">
                   <AnimatePresence mode="wait">
                     <motion.div key={showPassword ? "visible" : "hidden"} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} transition={{ duration: 0.15 }}>
                       {showPassword ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
@@ -605,7 +616,7 @@ const AuthPage = ({ authMode, setGlobalUser, changePage }) => {
           
           <p className="mt-8 text-center text-sm font-medium text-slate-500">
             {view === 'login' ? "Don't have an account? " : "Already have an account? "}
-            <button onClick={() => {setView(view === 'login' ? 'signup' : 'login'); setErrorMsg(''); setSuccessMsg(''); setPassword(''); setShowPassword(false);}} className="text-indigo-600 font-bold hover:underline transition">
+            <button onClick={() => {setView(view === 'login' ? 'signup' : 'login'); setErrorMsg(''); setSuccessMsg(''); setPassword(''); setShowPassword(false);}} className="text-indigo-600 font-bold hover:underline transition focus:outline-none">
               {view === 'login' ? 'Create Account' : 'Sign In'}
             </button>
           </p>
@@ -992,6 +1003,7 @@ export default function App() {
     }
     setInputText('');
     setResult(null);
+    setIsMobileMenuOpen(false); // Make sure to close menu on page change
   };
 
   const handleLogout = () => {
