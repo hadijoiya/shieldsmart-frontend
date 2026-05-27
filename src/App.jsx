@@ -10,60 +10,90 @@ import { motion, AnimatePresence } from 'framer-motion';
 // ==========================================
 // 1. NAVBAR & FOOTER COMPONENTS
 // ==========================================
-const Navbar = ({ currentPage, changePage, globalUser, handleLogout }) => (
-  <nav className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
-    <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div className="flex items-center gap-3 cursor-pointer" onClick={() => changePage('home')}>
-        <div className="bg-indigo-600 p-2.5 rounded-xl shadow-lg shadow-indigo-200">
-          <Shield className="w-6 h-6 text-white" />
+const Navbar = ({ currentPage, changePage, globalUser, handleLogout }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  return (
+    <nav className="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        {/* LOGO */}
+        <div className="flex items-center gap-3 cursor-pointer" onClick={() => changePage('home')}>
+          <div className="bg-indigo-600 p-2.5 rounded-xl shadow-lg shadow-indigo-200">
+            <Shield className="w-6 h-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-xl font-black tracking-tight text-slate-900 leading-tight">
+              SHIELD<span className="text-indigo-600">SMART</span>
+            </h1>
+            <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">IoT Defense Platform</p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-xl font-black tracking-tight text-slate-900 leading-tight">
-            SHIELD<span className="text-indigo-600">SMART</span>
-          </h1>
-          <p className="text-[10px] uppercase tracking-widest text-slate-400 font-bold">IoT Defense Platform</p>
+        
+        {/* DESKTOP LINKS */}
+        <div className="hidden lg:flex items-center gap-8 text-sm font-bold text-slate-500">
+          <button onClick={() => changePage('home')} className={`hover:text-indigo-600 transition ${currentPage === 'home' ? 'text-indigo-600' : ''}`}>Home</button>
+          <button onClick={() => changePage('scanner', 'url')} className={`hover:text-indigo-600 transition ${currentPage === 'scanner_url' ? 'text-indigo-600' : ''}`}>URL Scanner</button>
+          <button onClick={() => changePage('scanner', 'email')} className={`hover:text-indigo-600 transition ${currentPage === 'scanner_email' ? 'text-indigo-600' : ''}`}>Email Scanner</button>
+          <button onClick={() => changePage('tips')} className={`hover:text-indigo-600 transition ${currentPage === 'tips' ? 'text-indigo-600' : ''}`}>Security Tips</button>
+          <button onClick={() => changePage('about')} className={`hover:text-indigo-600 transition ${currentPage === 'about' ? 'text-indigo-600' : ''}`}>About Us</button>
         </div>
-      </div>
-      
-      <div className="hidden lg:flex items-center gap-8 text-sm font-bold text-slate-500">
-        <button onClick={() => changePage('home')} className={`hover:text-indigo-600 transition ${currentPage === 'home' ? 'text-indigo-600' : ''}`}>Home</button>
-        <button onClick={() => changePage('scanner', 'url')} className={`hover:text-indigo-600 transition ${currentPage === 'scanner_url' ? 'text-indigo-600' : ''}`}>URL Scanner</button>
-        <button onClick={() => changePage('scanner', 'email')} className={`hover:text-indigo-600 transition ${currentPage === 'scanner_email' ? 'text-indigo-600' : ''}`}>Email Scanner</button>
-        <button onClick={() => changePage('tips')} className={`hover:text-indigo-600 transition ${currentPage === 'tips' ? 'text-indigo-600' : ''}`}>Security Tips</button>
-        <button onClick={() => changePage('about')} className={`hover:text-indigo-600 transition ${currentPage === 'about' ? 'text-indigo-600' : ''}`}>About Us</button>
+
+        {/* DESKTOP BUTTONS */}
+        <div className="hidden md:flex items-center gap-4">
+          {globalUser ? (
+            <>
+              <button onClick={() => changePage('pricing')} className="text-sm font-bold bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white px-4 py-2 rounded-xl transition shadow-lg shadow-orange-500/20 flex items-center gap-2">
+                <Sparkles className="w-4 h-4" /> Upgrade Pro
+              </button>
+              <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 px-4 py-2 rounded-xl">
+                <User className="w-4 h-4 text-indigo-600" />
+                <span className="text-sm font-bold text-slate-700">{globalUser}</span>
+              </div>
+              <button onClick={handleLogout} className="text-sm font-bold text-rose-600 hover:bg-rose-50 px-3 py-2 rounded-lg transition flex items-center gap-2">
+                <LogOut className="w-4 h-4" />
+              </button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => changePage('auth', 'login')} className="text-sm font-bold text-slate-600 hover:text-indigo-600 transition flex items-center gap-2">Sign In</button>
+              <button onClick={() => changePage('auth', 'signup')} className="text-sm font-bold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-5 py-2.5 rounded-xl transition border border-indigo-200">Create Account</button>
+            </>
+          )}
+        </div>
+
+        {/* MOBILE HAMBURGER ICON */}
+        <div className="md:hidden flex items-center">
+          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="text-slate-600 hover:text-indigo-600 transition">
+            {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+          </button>
+        </div>
       </div>
 
-      <div className="hidden md:flex items-center gap-4">
-        {globalUser ? (
-          <>
-            <button onClick={() => changePage('pricing')} className="text-sm font-bold bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-white px-4 py-2 rounded-xl transition shadow-lg shadow-orange-500/20 flex items-center gap-2">
-              <Sparkles className="w-4 h-4" /> Upgrade Pro
-            </button>
-            <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 px-4 py-2 rounded-xl">
-              <User className="w-4 h-4 text-indigo-600" />
-              <span className="text-sm font-bold text-slate-700">{globalUser}</span>
-            </div>
-            <button onClick={handleLogout} className="text-sm font-bold text-rose-600 hover:bg-rose-50 px-3 py-2 rounded-lg transition flex items-center gap-2">
-              <LogOut className="w-4 h-4" />
-            </button>
-          </>
-        ) : (
-          <>
-            <button onClick={() => changePage('pricing')} className="text-sm font-bold text-orange-500 hover:text-orange-600 transition flex items-center gap-2 mr-2">
-              <Activity className="w-4 h-4" /> Subscriptions
-            </button>
-            <button onClick={() => changePage('auth', 'login')} className="text-sm font-bold text-slate-600 hover:text-indigo-600 transition flex items-center gap-2">
-              Sign In
-            </button>
-            <button onClick={() => changePage('auth', 'signup')} className="text-sm font-bold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-5 py-2.5 rounded-xl transition border border-indigo-200">
-              Create Account
-            </button>
-          </>
-        )}
-      </div>
-    </div>
-  </nav>
-);
+      {/* MOBILE MENU DROPDOWN */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden bg-white border-t border-slate-100 p-5 flex flex-col gap-4 shadow-xl absolute w-full">
+          <button onClick={() => {changePage('home'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-slate-600">Home</button>
+          <button onClick={() => {changePage('scanner', 'url'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-slate-600">URL Scanner</button>
+          <button onClick={() => {changePage('scanner', 'email'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-slate-600">Email Scanner</button>
+          <button onClick={() => {changePage('tips'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-slate-600">Security Tips</button>
+          <button onClick={() => {changePage('about'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-slate-600">About Us</button>
+          <hr className="border-slate-100 my-2"/>
+          {globalUser ? (
+            <>
+              <div className="font-bold text-indigo-600 flex items-center gap-2"><User className="w-4 h-4"/> {globalUser}</div>
+              <button onClick={() => {handleLogout(); setIsMobileMenuOpen(false);}} className="text-left text-rose-600 font-bold flex items-center gap-2"><LogOut className="w-4 h-4"/> Log Out</button>
+            </>
+          ) : (
+            <>
+              <button onClick={() => {changePage('auth', 'login'); setIsMobileMenuOpen(false);}} className="text-left font-bold text-slate-600">Sign In</button>
+              <button onClick={() => {changePage('auth', 'signup'); setIsMobileMenuOpen(false);}} className="bg-indigo-50 text-indigo-700 px-4 py-3 rounded-xl font-bold text-center">Create Account</button>
+            </>
+          )}
+        </div>
+      )}
+    </nav>
+  );
+};
 
 const Footer = ({ changePage }) => (
   <footer className="bg-slate-900 border-t border-slate-800 pt-16 pb-8 text-slate-400">
