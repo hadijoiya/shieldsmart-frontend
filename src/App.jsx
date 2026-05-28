@@ -8,7 +8,7 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 
 // ==========================================
-// 1. NAVBAR (WITH MOBILE RESPONSIVE MENU) & FOOTER
+// 1. NAVBAR (WITH MOBILE RESPONSIVE MENU)
 // ==========================================
 const Navbar = ({ currentPage, changePage, globalUser, handleLogout }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -106,9 +106,56 @@ const Navbar = ({ currentPage, changePage, globalUser, handleLogout }) => {
   );
 };
 
+// ==========================================
+// 2. NEW PROFESSIONAL FOOTER (ANIMATED + COMMS NODE)
+// ==========================================
 const Footer = ({ changePage }) => (
-  <footer className="bg-slate-900 border-t border-slate-800 pt-16 pb-8 text-slate-400">
-    <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+  <footer className="bg-slate-900 border-t border-slate-800 pt-20 pb-8 text-slate-400 relative overflow-hidden mt-auto">
+    {/* Animated Background Elements for Wow Factor */}
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-px bg-gradient-to-r from-transparent via-indigo-500 to-transparent opacity-50"></div>
+    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-indigo-500 opacity-10 blur-[3rem] rounded-b-full"></div>
+
+    <div className="max-w-7xl mx-auto px-6 mb-16">
+      {/* SECURE COMMUNICATIONS BLOCK (Wow Factor) */}
+      <div className="bg-slate-800/40 border border-slate-700/50 rounded-3xl p-8 md:p-10 flex flex-col lg:flex-row items-center justify-between gap-8 backdrop-blur-md relative z-10 group hover:border-indigo-500/30 transition-all duration-500 shadow-2xl">
+        <div className="flex-1 text-center lg:text-left">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-black tracking-widest uppercase mb-4 shadow-sm">
+            <Lock className="w-3 h-3" /> Secure Comms Node
+          </div>
+          <h3 className="text-2xl md:text-3xl font-black text-white mb-2 tracking-tight">Need to report a threat or partner with us?</h3>
+          <p className="text-slate-400 font-medium text-sm max-w-lg mx-auto lg:mx-0 leading-relaxed">
+            Reach out to our specialized channels. All communications are strictly monitored and processed under our zero-trust protocol.
+          </p>
+        </div>
+        
+        <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+          {/* Threat Support Button */}
+          <a href="mailto:support@smartiotshield.com" className="flex items-center justify-center gap-4 bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 group/btn shadow-lg">
+            <div className="bg-slate-800 group-hover/btn:bg-emerald-500/10 p-2 rounded-xl transition-colors">
+              <ShieldAlert className="w-6 h-6 text-emerald-400 group-hover/btn:scale-110 transition-transform duration-300" />
+            </div>
+            <div className="text-left">
+              <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Threat Support</div>
+              <div className="text-sm tracking-wide">support@smartiotshield.com</div>
+            </div>
+          </a>
+          
+          {/* Admin / Business Button */}
+          <a href="mailto:admin@smartiotshield.com" className="flex items-center justify-center gap-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_25px_rgba(79,70,229,0.5)] group/btn">
+            <div className="bg-indigo-700/50 group-hover/btn:bg-indigo-400/30 p-2 rounded-xl transition-colors">
+              <User className="w-6 h-6 text-indigo-100 group-hover/btn:scale-110 transition-transform duration-300" />
+            </div>
+            <div className="text-left">
+              <div className="text-[10px] uppercase tracking-widest text-indigo-200 font-bold">Admin / Jury</div>
+              <div className="text-sm tracking-wide">admin@smartiotshield.com</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    {/* STANDARD FOOTER LINKS (Unchanged Layout) */}
+    <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 mb-12 relative z-10">
       <div className="col-span-1 md:col-span-1">
         <div className="flex items-center gap-2 mb-4">
           <Shield className="w-6 h-6 text-indigo-500" />
@@ -123,46 +170,47 @@ const Footer = ({ changePage }) => (
       </div>
       
       <div>
-        <h4 className="text-white font-bold mb-6">Platform Services</h4>
+        <h4 className="text-white font-bold mb-6 tracking-wide">Platform Services</h4>
         <ul className="space-y-4 text-sm font-medium">
-          <li><button onClick={() => changePage('scanner', 'url')} className="hover:text-indigo-400 transition">IoT URL Scanner</button></li>
-          <li><button onClick={() => changePage('scanner', 'email')} className="hover:text-indigo-400 transition">Payload Analyzer</button></li>
-          <li><button onClick={() => changePage('tips')} className="hover:text-indigo-400 transition">Security Best Practices</button></li>
-          <li><button onClick={() => changePage('pricing')} className="hover:text-indigo-400 transition">Subscription Plans</button></li>
+          <li><button onClick={() => changePage('scanner', 'url')} className="hover:text-indigo-400 transition flex items-center gap-2"><LinkIcon className="w-3.5 h-3.5"/> IoT URL Scanner</button></li>
+          <li><button onClick={() => changePage('scanner', 'email')} className="hover:text-indigo-400 transition flex items-center gap-2"><Mail className="w-3.5 h-3.5"/> Payload Analyzer</button></li>
+          <li><button onClick={() => changePage('tips')} className="hover:text-indigo-400 transition flex items-center gap-2"><Lightbulb className="w-3.5 h-3.5"/> Security Best Practices</button></li>
+          <li><button onClick={() => changePage('pricing')} className="hover:text-indigo-400 transition flex items-center gap-2"><Sparkles className="w-3.5 h-3.5"/> Subscription Plans</button></li>
         </ul>
       </div>
 
       <div>
-        <h4 className="text-white font-bold mb-6">Company & Research</h4>
+        <h4 className="text-white font-bold mb-6 tracking-wide">Company & Research</h4>
         <ul className="space-y-4 text-sm font-medium">
           <li><button onClick={() => changePage('about')} className="hover:text-indigo-400 transition">About Us</button></li>
           <li><button className="hover:text-indigo-400 transition">Research Methodology</button></li>
-          <li><button className="hover:text-indigo-400 transition">Contact Infrastructure</button></li>
+          <li><button className="hover:text-indigo-400 transition">XAI Architecture</button></li>
           <li><button className="hover:text-indigo-400 transition">API Documentation</button></li>
         </ul>
       </div>
 
       <div>
-        <h4 className="text-white font-bold mb-6">Legal & Compliance</h4>
+        <h4 className="text-white font-bold mb-6 tracking-wide">Legal & Compliance</h4>
         <ul className="space-y-4 text-sm font-medium">
           <li><button className="hover:text-indigo-400 transition">Privacy Policy</button></li>
           <li><button className="hover:text-indigo-400 transition">Terms of Service</button></li>
           <li><button className="hover:text-indigo-400 transition">Cookie Policy</button></li>
-          <li><button className="hover:text-indigo-400 transition">Data Processing Agreement</button></li>
+          <li><button className="hover:text-indigo-400 transition flex items-center gap-2 text-emerald-500"><CheckCircle2 className="w-3.5 h-3.5"/> System Status: Operational</button></li>
         </ul>
       </div>
     </div>
-    <div className="max-w-7xl mx-auto px-6 border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+    
+    <div className="max-w-7xl mx-auto px-6 border-t border-slate-800/60 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
       <p className="text-sm font-medium">© 2026 ShieldSmart Research Team. All rights reserved.</p>
-      <div className="flex items-center gap-2 text-sm font-medium">
-        <Globe className="w-4 h-4" /> Global Defense Network Active
+      <div className="flex items-center gap-2 text-sm font-medium bg-slate-800/50 px-3 py-1.5 rounded-full border border-slate-700">
+        <Globe className="w-4 h-4 text-indigo-400" /> Global Defense Network Active
       </div>
     </div>
   </footer>
 );
 
 // ==========================================
-// 2. SECURITY TIPS PAGE
+// 3. SECURITY TIPS PAGE
 // ==========================================
 const SecurityTipsPage = () => {
   const tips = [
@@ -199,7 +247,7 @@ const SecurityTipsPage = () => {
 };
 
 // ==========================================
-// 3. PRICING / UPGRADE PAGE
+// 4. PRICING / UPGRADE PAGE
 // ==========================================
 const PricingPage = ({ changePage, globalUser }) => {
   return (
@@ -250,7 +298,7 @@ const PricingPage = ({ changePage, globalUser }) => {
 };
 
 // ==========================================
-// 4. MULTI-STEP AUTHENTICATION PAGE (ANIMATED, WOW UX)
+// 5. MULTI-STEP AUTHENTICATION PAGE
 // ==========================================
 const AuthPage = ({ authMode, setGlobalUser, changePage }) => {
   const [view, setView] = useState(authMode); 
@@ -672,7 +720,7 @@ const AuthPage = ({ authMode, setGlobalUser, changePage }) => {
 };
 
 // ==========================================
-// 5. HOME, ABOUT US & SCANNER COMPONENTS 
+// 6. HOME, ABOUT US & SCANNER COMPONENTS 
 // ==========================================
 const IoTBlogSection = () => {
   const blogs = [
@@ -800,12 +848,10 @@ const AboutPage = () => {
 };
 
 // ==========================================
-// CARD COMPONENT FOR SCAN HISTORY (Polished & Professional)
+// CARD COMPONENT FOR SCAN HISTORY
 // ==========================================
 const HistoryCard = ({ scan }) => {
   const isSafe = scan.status === 'Safe';
-  
-  // Logic: Summary text mein se 'RESULT: PHISHING' ya 'RESULT: SAFE' nikal kar sirf intelligence dikhayen
   const cleanSummary = scan.summary.replace(/RESULT: (PHISHING|SAFE)/gi, '').trim();
 
   return (
@@ -825,7 +871,6 @@ const HistoryCard = ({ scan }) => {
         <div className="text-indigo-900 font-black text-xl mb-3">Risk Score: {scan.confidence}%</div>
         <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm font-mono text-slate-600 mb-4 truncate" title={scan.query}>{scan.query}</div>
         
-        {/* POLISHED HISTORY CARD UI */}
         <div className="flex-grow">
             <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Threat Intelligence</p>
             <p className="text-sm text-slate-700 font-medium leading-relaxed italic">{cleanSummary}</p>
@@ -945,7 +990,7 @@ const ScannerPage = ({ scanType, inputText, setInputText, handleScan, loading, r
 };
 
 // ==========================================
-// 6. MAIN APP COMPONENT
+// 7. MAIN APP COMPONENT (HASH ROUTING ENABLED)
 // ==========================================
 export default function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -960,6 +1005,7 @@ export default function App() {
   const [emailLimit, setEmailLimit] = useState(10); 
   const [scanHistory, setScanHistory] = useState([]);
 
+  // Setup Limits and History
   useEffect(() => {
     if (globalUser) {
       const today = new Date().toDateString(); 
@@ -974,7 +1020,6 @@ export default function App() {
         setUrlLimit(10);
         setEmailLimit(10);
       } else {
-        // AUTO-CORRECT LOGIC: Agar purani 1000 wali limit browser me save reh gayi hai
         let currentUrlLimit = parseInt(localStorage.getItem(`shieldUrlLimit_${globalUser}`)) || 0;
         let currentEmailLimit = parseInt(localStorage.getItem(`shieldEmailLimit_${globalUser}`)) || 0;
         
@@ -993,17 +1038,54 @@ export default function App() {
     }
   }, [globalUser]);
 
+  // =====================================
+  // HASH ROUTING (FIX FOR BROWSER BACK BUTTON)
+  // =====================================
+  useEffect(() => {
+    const handleHashChange = () => {
+      // Get hash without the '#' symbol
+      const hash = window.location.hash.replace('#', '') || 'home';
+      
+      if (hash === 'auth_login') {
+        setCurrentPage('auth'); 
+        setAuthMode('login');
+      } 
+      else if (hash === 'auth_signup') {
+        setCurrentPage('auth'); 
+        setAuthMode('signup');
+      } 
+      else if (hash.startsWith('scanner_')) {
+        setCurrentPage(hash);
+        setScanType(hash.split('_')[1]);
+      } 
+      else {
+        setCurrentPage(hash);
+      }
+      
+      // Smooth scroll to top on page change
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // Listen for browser back/forward buttons
+    window.addEventListener('hashchange', handleHashChange);
+    
+    // Check hash on initial load
+    handleHashChange(); 
+    
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  // Update changePage to use window.location.hash
   const changePage = (page, type = 'url') => {
-    if (page === 'auth') {
-      setAuthMode(type); 
-      setCurrentPage('auth');
-    } else {
-      setCurrentPage(page === 'scanner' ? `scanner_${type}` : page);
-      if (page === 'scanner') setScanType(type);
-    }
     setInputText('');
     setResult(null);
-    setIsMobileMenuOpen(false); // Make sure to close menu on page change
+
+    let newHash = page;
+    if (page === 'auth') newHash = `auth_${type}`;
+    if (page === 'scanner') newHash = `scanner_${type}`;
+    
+    // Changing the hash will trigger the useEffect above
+    window.location.hash = newHash; 
   };
 
   const handleLogout = () => {
