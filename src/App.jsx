@@ -107,7 +107,7 @@ const Navbar = ({ currentPage, changePage, globalUser, handleLogout }) => {
 };
 
 // ==========================================
-// 2. NEW PROFESSIONAL FOOTER (ANIMATED + COMMS NODE)
+// 2. NEW PROFESSIONAL FOOTER (USER-FRIENDLY & SOBER)
 // ==========================================
 const Footer = ({ changePage }) => (
   <footer className="bg-slate-900 border-t border-slate-800 pt-20 pb-8 text-slate-400 relative overflow-hidden mt-auto">
@@ -116,37 +116,37 @@ const Footer = ({ changePage }) => (
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-indigo-500 opacity-10 blur-[3rem] rounded-b-full"></div>
 
     <div className="max-w-7xl mx-auto px-6 mb-16">
-      {/* SECURE COMMUNICATIONS BLOCK (Wow Factor) */}
+      {/* CLEAR & FRIENDLY COMMUNICATIONS BLOCK */}
       <div className="bg-slate-800/40 border border-slate-700/50 rounded-3xl p-8 md:p-10 flex flex-col lg:flex-row items-center justify-between gap-8 backdrop-blur-md relative z-10 group hover:border-indigo-500/30 transition-all duration-500 shadow-2xl">
         <div className="flex-1 text-center lg:text-left">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-[10px] font-black tracking-widest uppercase mb-4 shadow-sm">
-            <Lock className="w-3 h-3" /> Secure Comms Node
+            <Mail className="w-3 h-3" /> Let's Connect
           </div>
-          <h3 className="text-2xl md:text-3xl font-black text-white mb-2 tracking-tight">Need to report a threat or partner with us?</h3>
+          <h3 className="text-2xl md:text-3xl font-black text-white mb-2 tracking-tight">We're here to help you stay secure.</h3>
           <p className="text-slate-400 font-medium text-sm max-w-lg mx-auto lg:mx-0 leading-relaxed">
-            Reach out to our specialized channels. All communications are strictly monitored and processed under our zero-trust protocol.
+            Whether you need technical assistance with our scanning tools or want to discuss academic and business inquiries, our team is just an email away.
           </p>
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-          {/* Threat Support Button */}
+          {/* Technical Support Button */}
           <a href="mailto:support@smartiotshield.com" className="flex items-center justify-center gap-4 bg-slate-900 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 group/btn shadow-lg">
             <div className="bg-slate-800 group-hover/btn:bg-emerald-500/10 p-2 rounded-xl transition-colors">
-              <ShieldAlert className="w-6 h-6 text-emerald-400 group-hover/btn:scale-110 transition-transform duration-300" />
+              <ShieldCheck className="w-6 h-6 text-emerald-400 group-hover/btn:scale-110 transition-transform duration-300" />
             </div>
             <div className="text-left">
-              <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Threat Support</div>
+              <div className="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Technical Support</div>
               <div className="text-sm tracking-wide">support@smartiotshield.com</div>
             </div>
           </a>
           
-          {/* Admin / Business Button */}
+          {/* Admin / General Button */}
           <a href="mailto:admin@smartiotshield.com" className="flex items-center justify-center gap-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-6 rounded-2xl transition-all duration-300 shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_25px_rgba(79,70,229,0.5)] group/btn">
             <div className="bg-indigo-700/50 group-hover/btn:bg-indigo-400/30 p-2 rounded-xl transition-colors">
               <User className="w-6 h-6 text-indigo-100 group-hover/btn:scale-110 transition-transform duration-300" />
             </div>
             <div className="text-left">
-              <div className="text-[10px] uppercase tracking-widest text-indigo-200 font-bold">Admin / Jury</div>
+              <div className="text-[10px] uppercase tracking-widest text-indigo-200 font-bold">Administration</div>
               <div className="text-sm tracking-wide">admin@smartiotshield.com</div>
             </div>
           </a>
